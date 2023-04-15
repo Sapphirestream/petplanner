@@ -1,0 +1,49 @@
+/* USED IN 'pages/login' && 'pages/Regiser' */
+
+.login {
+  border: 1px solid #f0f0f0;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 2px 2px 10px #171717;
+  width: 50vw;
+}
+
+.login input {
+  margin: 10px;
+  width: 200px;
+}
+
+.valid {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.invalid {
+  background-color: pink;
+  border: solid 1px red;
+}
+
+.invalid:focus {
+  border-color: #ff8800;
+  background-color: #fbe8d2;
+}
+
+.login label {
+  min-width: 100px;
+  display: inline-block;
+  text-align: start;
+}
+
+.error-text {
+  color: #b40e0e;
+  margin: 0px;
+}
+
+.login button {
+  margin: 10px;
+  width: 150px;
+}

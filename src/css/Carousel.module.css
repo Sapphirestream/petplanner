@@ -1,0 +1,34 @@
+.carousel {
+  background-color: #d9d9d9;
+  display: flex;
+  min-height: 40px;
+}
+
+.hidden {
+  height: 40px;
+  justify-content: flex-end;
+}
+
+.shown {
+  flex-direction: column;
+  align-items: end;
+}
+
+.extendBtn {
+  border: none;
+  background-color: transparent;
+  color: #636363;
+  font-size: 1rem;
+  margin-right: 20px;
+}
+
+.extendBtn:hover {
+  color: white;
+}
+
+.petSelectHold {
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  align-self: center;
+}
