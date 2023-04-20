@@ -1,0 +1,75 @@
+.petPic {
+  max-width: 200px;
+  height: 200px;
+  margin: 10px;
+  border-radius: 25px;
+  display: block;
+  object-fit: cover;
+}
+
+.petBox {
+  display: inline-block;
+}
+
+.displayBox {
+  border: grey solid 2px;
+  border-radius: 25px;
+  width: 90vw;
+  margin: 20px;
+}
+
+.displayBox > div {
+  align-self: center;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.infoBox p {
+  margin: 0 15px;
+  display: inline;
+  text-align: start;
+}
+
+.infoBox h3,
+.infoBox button {
+  margin: 10px 15px;
+}
+
+.expandBox {
+  border: 2px solid grey;
+  border-radius: 25px;
+  overflow: scroll;
+  width: 95%;
+  margin: 15px;
+  padding: 5px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.expandHolder {
+  display: flex;
+  justify-content: center;
+}
+
+.expandBox th {
+  border: solid black 1px;
+  width: 500px;
+}
+
+.expandBox td {
+  border: solid grey 1px;
+  justify-content: center;
+}
+
+.expandBox button {
+  margin: 0px 2px;
+}
+
+.editRow {
+  max-width: 100px;
+}

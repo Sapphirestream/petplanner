@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../util/database");
 
 const Pet = sequelize.define("pet", {
-  petId: {
+  Id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
@@ -18,6 +18,10 @@ const Pet = sequelize.define("pet", {
     allowNull: false,
   },
   type: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  breed: {
     type: Sequelize.STRING,
     allowNull: true,
   },

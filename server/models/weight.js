@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../util/database");
 
 const Weight = sequelize.define("weight", {
-  weightId: {
+  Id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,

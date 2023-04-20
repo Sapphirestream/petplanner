@@ -1,4 +1,4 @@
-import classes from "../../css/PetSelect.module.css";
+import classes from "../../css/Carousel.module.css";
 
 const PetSelect = (props) => {
   return (

@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../util/database");
 
 const Event = sequelize.define("event", {
-  eventId: {
+  Id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,

@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../util/database");
 
 const Group = sequelize.define("group", {
-  groupId: {
+  Id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,

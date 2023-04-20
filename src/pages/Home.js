@@ -5,7 +5,6 @@ const Home = () => {
   return (
     <>
       <Carousel />
-      <p>Home Page</p>
       <DateDisplay />
     </>
   );

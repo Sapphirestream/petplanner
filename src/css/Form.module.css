@@ -1,4 +1,4 @@
-/* USED IN 'pages/login' && 'pages/Regiser' */
+/* USED IN 'pages/login' && 'pages/Regiser' && 'NewPetForm'*/
 
 .login {
   border: 1px solid #f0f0f0;
@@ -11,9 +11,21 @@
   width: 50vw;
 }
 
+.petForm {
+  border: grey solid 2px;
+  border-radius: 25px;
+  width: 90%;
+  margin: 20px;
+}
+
 .login input {
   margin: 10px;
   width: 200px;
+}
+
+.invalid {
+  background-color: pink;
+  border: solid 1px red;
 }
 
 .valid {
@@ -22,17 +34,18 @@
   border-bottom: 1px solid black;
 }
 
-.invalid {
-  background-color: pink;
-  border: solid 1px red;
-}
-
 .invalid:focus {
   border-color: #ff8800;
   background-color: #fbe8d2;
 }
 
-.login label {
+.petForm input {
+  margin: 10px;
+  width: 400px;
+}
+
+.login label,
+.petForm label {
   min-width: 100px;
   display: inline-block;
   text-align: start;
@@ -43,7 +56,17 @@
   margin: 0px;
 }
 
-.login button {
+.login button,
+.petForm button {
   margin: 10px;
   width: 150px;
+}
+
+.petForm textarea {
+  margin: 10px;
+  min-height: 100px;
+  width: 400px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid black;
 }

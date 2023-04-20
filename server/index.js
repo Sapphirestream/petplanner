@@ -24,6 +24,9 @@ Pet.hasMany(Weight);
 Medication.belongsTo(Pet);
 Weight.belongsTo(Pet);
 
+User.hasMany(Pet);
+Pet.belongsTo(User);
+
 User.belongsToMany(Pet, { through: Permission });
 Pet.belongsToMany(User, { through: Permission });
 

@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../util/database");
 
 const Medication = sequelize.define("medication", {
-  medId: {
+  Id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,

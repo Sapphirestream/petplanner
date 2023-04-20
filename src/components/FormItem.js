@@ -1,7 +1,13 @@
 import classes from "../css/Form.module.css";
 
 const FormItem = (props) => {
-  const { input, id, label, err, type = "text" } = props;
+  const {
+    input,
+    id,
+    label,
+    err = "Please enter a valid input",
+    type = "text",
+  } = props;
   const { placeholder = label } = props;
 
   return (
