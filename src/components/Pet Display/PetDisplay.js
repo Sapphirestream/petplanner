@@ -3,11 +3,12 @@ import { useState } from "react";
 import MedItem from "./MedItem";
 import WeightItem from "./WeightItem";
 import PetForm from "./PetForm";
+import WeightForm from "./WeightForm";
 
 const DUMMY_MEDICATION = [
   {
     petId: 1,
-    id: 1,
+    Id: 1,
     name: "Kitty Pills",
     official: "Focalin longName",
     dosage: "10mg",
@@ -18,7 +19,7 @@ const DUMMY_MEDICATION = [
   },
   {
     petId: 1,
-    id: 1,
+    Id: 2,
     name: "Second Pills",
     official: "Focalin longName",
     dosage: "20mg",
@@ -30,8 +31,8 @@ const DUMMY_MEDICATION = [
 ];
 
 const DUMMY_WEIGHT = [
-  { petId: 1, weight: "12lb", weightDate: "August 2nd, 2022", id: 1 },
-  { petId: 1, weight: "12.5lb", weightDate: "May 2nd, 2022", id: 2 },
+  { petId: 1, weight: "12lb", weightDate: "August 2nd, 2022", Id: 1 },
+  { petId: 1, weight: "12.5lb", weightDate: "May 2nd, 2022", Id: 2 },
 ];
 
 const PetDisplay = (props) => {
@@ -40,8 +41,10 @@ const PetDisplay = (props) => {
   const [editPet, setEditPet] = useState(false);
   const [meds, setMeds] = useState(false);
   const [medsEdit, setMedsEdit] = useState(false);
+  const [medsAdd, setMedsAdd] = useState(false);
   const [weight, setWeight] = useState(false);
   const [weightEdit, setWeightEdit] = useState(false);
+  const [weightAdd, setWeightAdd] = useState(false);
   const [permissions, setPermissions] = useState(false);
   const [permissionsEdit, setPermissionsEdit] = useState(false);
 
@@ -62,27 +65,39 @@ const PetDisplay = (props) => {
           <p>Food: {food}</p>
           <p>Notes: {notes}</p>
           <div>
-            <button>Show Permissions</button>
+            <button
+              onClick={(e) => {
+                setPermissions(!permissions);
+                setPermissionsEdit(false);
+              }}
+            >
+              {permissions ? "Hide" : "Show"} Permissions
+            </button>
             <button
               onClick={(e) => {
                 setMeds(!meds);
+                setMedsEdit(false);
               }}
             >
-              Show Medication
+              {meds ? "Hide" : "Show"} Medication
             </button>
             <button
               onClick={(e) => {
                 setWeight(!weight);
+                setWeightEdit(false);
               }}
             >
-              Show Weight History
+              {weight ? "Hide" : "Show"} Weight History
             </button>
             {!editPet && (
               <button
                 onClick={(e) => {
                   setPermissions(false);
-                  setWeight(false);
+                  setPermissionsEdit(false);
                   setMeds(false);
+                  setMedsEdit(false);
+                  setWeight(false);
+                  setWeightEdit(false);
                   setEditPet(true);
                 }}
               >
@@ -106,24 +121,38 @@ const PetDisplay = (props) => {
         <div className={classes.expandBox}>
           <h4>Medication</h4>
           <table>
-            <tr>
-              <th> Name</th>
-              <th> Official</th>
-              <th> Dosage</th>
-              <th> Start Date</th>
-              <th> End Date</th>
-              <th> Frequency</th>
-              <th> Notes</th>
-              {medsEdit && <th className={classes.editRow}> Edit </th>}
-            </tr>
-            {DUMMY_MEDICATION.map((med) => {
-              return (
-                <MedItem med={med} key={med.id + 10} showEdit={medsEdit} />
-              );
-            })}
+            <thead>
+              <tr>
+                <th> Name</th>
+                <th> Official</th>
+                <th> Dosage</th>
+                <th> Start Date</th>
+                <th> End Date</th>
+                <th> Frequency</th>
+                <th> Notes</th>
+                {medsEdit && <th className={classes.editRow}> Edit </th>}
+              </tr>
+            </thead>
+            <tbody>
+              {DUMMY_MEDICATION.map((med) => {
+                return (
+                  <MedItem
+                    med={med}
+                    key={`med${med.Id}${med.petId}`}
+                    showEdit={medsEdit}
+                  />
+                );
+              })}
+            </tbody>
           </table>
           <div>
-            <button>Add Medication</button>
+            <button
+              onClick={(e) => {
+                setMedsAdd(!medsAdd);
+              }}
+            >
+              Add Medication
+            </button>
             <button
               onClick={(e) => {
                 setMedsEdit(!medsEdit);
@@ -139,21 +168,26 @@ const PetDisplay = (props) => {
         <div className={classes.expandBox}>
           <h4> Weight History </h4>
           <table>
-            <tr>
-              <th>Date</th>
-              <th>Weight</th>
-              {weightEdit && <th className={classes.editRow}>Edit</th>}
-            </tr>
-            {DUMMY_WEIGHT.map((weight) => {
-              return (
-                <WeightItem
-                  weight={weight}
-                  showEdit={weightEdit}
-                  key={weight.id + 100}
-                />
-              );
-            })}
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Weight</th>
+                {weightEdit && <th className={classes.editRow}>Edit</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {DUMMY_WEIGHT.map((weight) => {
+                return (
+                  <WeightItem
+                    weight={weight}
+                    showEdit={weightEdit}
+                    key={`weight${weight.Id}${weight.petId}`}
+                  />
+                );
+              })}
+            </tbody>
           </table>
+          <WeightForm />
           <div>
             <button>Add Record</button>
             <button

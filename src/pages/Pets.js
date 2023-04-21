@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 import classes from "../css/PetDisplay.module.css";
 import PetDisplay from "../components/Pet Display/PetDisplay";
 import PetForm from "../components/Pet Display/PetForm";
+import AuthContext from "../store/authContext";
 
 const DUMMY_PETS = [
   {
-    id: 1,
+    Id: 1,
+    userId: 1,
     name: "Topaz",
     image:
       "https://www.catster.com/wp-content/uploads/2018/09/Brown-tabby-cat-close-up-outdoors.jpg.optimal.jpg",
@@ -19,7 +22,8 @@ const DUMMY_PETS = [
     notes: "Here are the notes for Topaz",
   },
   {
-    id: 2,
+    Id: 2,
+    userId: 2,
     name: "Lotus",
     image:
       "https://www.pumpkin.care/wp-content/uploads/2021/01/Siamese-Hero.jpg",
@@ -35,13 +39,36 @@ const DUMMY_PETS = [
 
 const Pets = () => {
   const [showAddPet, setShowAddPet] = useState(false);
+  const [pets, setPets] = useState([]);
+  const { token, userId } = useContext(AuthContext);
+  const url = "http://localhost:4000";
+
+  useEffect(() => {
+    axios
+      .get(`${url}/pets/getPets`, {
+        headers: { Authorization: token, userId: userId },
+      })
+      .then((res) => {
+        console.log(res.data.pets);
+        setPets(res.data.pets);
+      })
+      .then((res) => {
+        console.log(pets);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userId, token]);
 
   return (
     <div>
-      {DUMMY_PETS.map((pet) => {
-        return <PetDisplay pet={pet} key={pet.id} />;
+      {/* {DUMMY_PETS.map((pet) => {
+        return <PetDisplay pet={pet} key={pet.Id} />;
+      })} */}
+      {pets.map((pet) => {
+        return <PetDisplay pet={pet} key={pet.Id} />;
       })}
-      {showAddPet && <PetForm userId={1} cancel={setShowAddPet} edit={false} />}
+      {showAddPet && <PetForm cancel={setShowAddPet} edit={false} />}
       {!showAddPet && (
         <button
           onClick={(e) => {

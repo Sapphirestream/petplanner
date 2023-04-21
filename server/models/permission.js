@@ -11,6 +11,10 @@ const Permission = sequelize.define("permission", {
     allowNull: false,
     primaryKey: true,
   },
+  owner: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+  },
   edit: {
     type: Sequelize.BOOLEAN,
     allowNull: false,

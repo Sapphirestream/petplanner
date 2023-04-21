@@ -25,12 +25,16 @@ const Pet = sequelize.define("pet", {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  vet: {
-    type: Sequelize.STRING,
-    allowNull: true,
-  },
   bday: {
     type: Sequelize.DATE,
+    allowNull: true,
+  },
+  age: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+  },
+  vet: {
+    type: Sequelize.STRING,
     allowNull: true,
   },
   food: {

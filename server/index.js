@@ -9,6 +9,7 @@ const app = express();
 
 const authRoutes = require("./routes/auth");
 const petRoutes = require("./routes/pets");
+const seed = require("./controllers/seed");
 
 const sequelize = require("./util/database");
 const User = require("./models/user");
@@ -24,8 +25,8 @@ Pet.hasMany(Weight);
 Medication.belongsTo(Pet);
 Weight.belongsTo(Pet);
 
-User.hasMany(Pet);
-Pet.belongsTo(User);
+//User.hasMany(Pet);
+//Pet.belongsTo(User);
 
 User.belongsToMany(Pet, { through: Permission });
 Pet.belongsToMany(User, { through: Permission });
@@ -41,9 +42,10 @@ app.use(cors());
 
 app.use("/auth", authRoutes);
 app.use("/pets", petRoutes);
+app.get("/seed", seed.seed);
 
 sequelize
-  .sync()
+  .sync({ force: false })
   .then((result) => {
     app.listen(PORT, () => {
       console.log(`server running on ${PORT}`);

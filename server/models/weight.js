@@ -10,7 +10,7 @@ const Weight = sequelize.define("weight", {
     primaryKey: true,
   },
   weight: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.FLOAT,
     allowNull: false,
   },
   weightDate: {

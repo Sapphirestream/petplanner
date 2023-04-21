@@ -49,7 +49,10 @@ const Login = () => {
   return (
     <main>
       <h2>Welcome!</h2>
-      <form className={classes.login} onSubmit={submitHandler}>
+      <form
+        className={`${classes.login} ${classes.formHolder}`}
+        onSubmit={submitHandler}
+      >
         {errorMessage && (
           <p className={classes["error-text"]}>{errorMessage}</p>
         )}

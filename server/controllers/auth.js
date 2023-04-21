@@ -9,8 +9,8 @@ const User = require("../models/user");
 const { SECRET } = process.env;
 
 //Actual Token Creation
-const createToken = (username, id) => {
-  return jwt.sign({ username, id }, SECRET, { expiresIn: "2 days" });
+const createToken = (username, Id) => {
+  return jwt.sign({ username, Id }, SECRET, { expiresIn: "2 days" });
 };
 
 exports.logout = (req, res) => {
@@ -34,15 +34,14 @@ exports.login = async (req, res, next) => {
         //create token (ln 12)
         const token = createToken(
           foundUser.dataValues.username,
-          foundUser.dataValues.id
+          foundUser.dataValues.Id
         );
 
         const exp = Date.now() + 1000 * 60 * 60 * 48;
-
         //sends token to the front end
         res.status(200).send({
           username: foundUser.dataValues.username,
-          userId: foundUser.dataValues.id,
+          userId: foundUser.dataValues.Id,
           token: token,
           exp: exp,
         });
@@ -85,10 +84,12 @@ exports.registerUser = async (req, res, next) => {
         password: hash,
       });
 
+      console.log(newUser.dataValues.Id);
+
       //create the token from user data (ln 12)
       const token = createToken(
         newUser.dataValues.username,
-        newUser.dataValues.id
+        newUser.dataValues.Id
       );
 
       //calculates experation date to send to user (match token)
@@ -97,7 +98,7 @@ exports.registerUser = async (req, res, next) => {
       //sends user data + token + exp back to the front end
       res.status(200).send({
         username: newUser.dataValues.username,
-        userId: newUser.dataValues.id,
+        userId: newUser.dataValues.Id,
         token: token,
         exp: exp,
       });
