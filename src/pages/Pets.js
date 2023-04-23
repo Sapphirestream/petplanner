@@ -39,26 +39,25 @@ const DUMMY_PETS = [
 
 const Pets = () => {
   const [showAddPet, setShowAddPet] = useState(false);
+  const [trigger, setTrigger] = useState("");
   const [pets, setPets] = useState([]);
   const { token, userId } = useContext(AuthContext);
   const url = "http://localhost:4000";
 
   useEffect(() => {
     axios
-      .get(`${url}/pets/getPets`, {
-        headers: { Authorization: token, userId: userId },
+      .get(`${url}/pets/getPets/${userId}`, {
+        headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res.data.pets);
+        //console.log(res.data.pets[0].weights);
         setPets(res.data.pets);
       })
-      .then((res) => {
-        console.log(pets);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
-  }, [userId, token]);
+  }, [userId, token, trigger]);
 
   return (
     <div>
@@ -66,7 +65,9 @@ const Pets = () => {
         return <PetDisplay pet={pet} key={pet.Id} />;
       })} */}
       {pets.map((pet) => {
-        return <PetDisplay pet={pet} key={pet.Id} />;
+        return (
+          <PetDisplay pet={pet} key={`pet ${pet.Id}`} trigger={setTrigger} />
+        );
       })}
       {showAddPet && <PetForm cancel={setShowAddPet} edit={false} />}
       {!showAddPet && (

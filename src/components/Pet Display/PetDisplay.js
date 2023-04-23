@@ -1,5 +1,6 @@
 import classes from "../../css/PetDisplay.module.css";
 import { useState } from "react";
+import axios from "axios";
 import MedItem from "./MedItem";
 import WeightItem from "./WeightItem";
 import PetForm from "./PetForm";
@@ -36,7 +37,10 @@ const DUMMY_WEIGHT = [
 ];
 
 const PetDisplay = (props) => {
-  const { image, name, breed, type, bday, vet, food, notes, age } = props.pet;
+  const { Id, image, name, breed, type, bday, vet, food, notes, age } =
+    props.pet;
+
+  const weights = props.pet.weights;
 
   const [editPet, setEditPet] = useState(false);
   const [meds, setMeds] = useState(false);
@@ -117,6 +121,9 @@ const PetDisplay = (props) => {
           </div>
         </div>
       </div>
+
+      {/* MEDICATION */}
+
       {meds && (
         <div className={classes.expandBox}>
           <h4>Medication</h4>
@@ -164,6 +171,8 @@ const PetDisplay = (props) => {
         </div>
       )}
 
+      {/* WEIGHT RECORDS  */}
+
       {weight && (
         <div className={classes.expandBox}>
           <h4> Weight History </h4>
@@ -176,20 +185,34 @@ const PetDisplay = (props) => {
               </tr>
             </thead>
             <tbody>
-              {DUMMY_WEIGHT.map((weight) => {
+              {weights.map((weight) => {
                 return (
                   <WeightItem
                     weight={weight}
                     showEdit={weightEdit}
+                    trigger={props.trigger}
                     key={`weight${weight.Id}${weight.petId}`}
                   />
                 );
               })}
             </tbody>
           </table>
-          <WeightForm />
+          {weightAdd && (
+            <WeightForm
+              petId={Id}
+              trigger={props.trigger}
+              edit={false}
+              close={setWeightAdd}
+            />
+          )}
           <div>
-            <button>Add Record</button>
+            <button
+              onClick={(e) => {
+                setWeightAdd(!weightAdd);
+              }}
+            >
+              {!weightAdd ? "Add Record" : "Stop Adding"}
+            </button>
             <button
               onClick={(e) => {
                 setWeightEdit(!weightEdit);
@@ -201,7 +224,16 @@ const PetDisplay = (props) => {
         </div>
       )}
 
-      {editPet && <PetForm cancel={setEditPet} pet={props.pet} edit={true} />}
+      {/* EDIT PETS  */}
+
+      {editPet && (
+        <PetForm
+          cancel={setEditPet}
+          pet={props.pet}
+          edit={true}
+          trigger={props.trigger}
+        />
+      )}
     </div>
   );
 };

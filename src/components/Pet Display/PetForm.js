@@ -36,16 +36,20 @@ const PetForm = (props) => {
 
   //set Initial input based on editing or adding a pet
   const [image, setImage] = useState(edit ? pet.image : "");
-  const [type, setType] = useState(edit & (pet.type != null) ? pet.type : "");
+  const [type, setType] = useState(
+    edit ? (pet.type != null ? pet.type : "") : ""
+  );
   const [breed, setBreed] = useState(
-    edit & (pet.breed != null) ? pet.breed : ""
+    edit ? (pet.breed != null ? pet.breed : "") : ""
   );
   const [bday, setBday] = useState(edit ? pet.bday : null);
-  const [age, setAge] = useState(edit & (pet.age != null) ? initAge : "");
-  const [vet, setVet] = useState(edit & (pet.vet != null) ? pet.vet : "");
-  const [food, setFood] = useState(edit & (pet.food != null) ? pet.food : "");
+  const [age, setAge] = useState(edit ? (pet.age != null ? initAge : "") : "");
+  const [vet, setVet] = useState(edit ? (pet.vet != null ? pet.vet : "") : "");
+  const [food, setFood] = useState(
+    edit ? (pet.food != null ? pet.food : "") : ""
+  );
   const [notes, setNotes] = useState(
-    edit & (pet.notes != null) ? pet.notes : ""
+    edit ? (pet.notes != null ? pet.notes : "") : ""
   );
 
   const [ageDisable, setAgeDisable] = useState(false);
@@ -79,12 +83,17 @@ const PetForm = (props) => {
       vet: vet === "" ? null : vet,
       food: food === "" ? null : food,
       notes: notes === "" ? null : notes,
-      userId: edit ? props.pet.userId : userId,
+      userId: edit ? null : userId,
     };
 
-    console.log(pet);
-
     if (edit) {
+      axios
+        .put(`${url}/pets/editPet/${props.pet.Id}`, pet)
+        .then((res) => {
+          console.log(res);
+          cancel(false);
+        })
+        .catch((err) => console.log(err));
     } else {
       axios
         .post(`${url}/pets/addPet`, pet, { headers: { authorization: token } })
