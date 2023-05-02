@@ -1,16 +1,15 @@
 import { useState, useContext } from "react";
-import useInput from "../../hook/useInput";
-import FormItem from "../FormItem";
+import useInput from "../../../hook/useInput";
+import FormItem from "../../FormItem";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 
-import "../../css/react-datepicker.css";
-import classes from "../../css/Form.module.css";
-import AuthContext from "../../store/authContext";
+import "../../../css/react-datepicker.css";
+import classes from "../../../css/Form.module.css";
+import AuthContext from "../../../store/authContext";
 
 const WeightForm = (props) => {
-  const url = "http://localhost:4000";
-  const { token } = useContext(AuthContext);
+  const { token, url } = useContext(AuthContext);
   const { edit } = props;
 
   // set starting Weight Inputs based on Editing or Adding
@@ -51,6 +50,7 @@ const WeightForm = (props) => {
           headers: { authorization: token },
         })
         .then(() => {
+          weight.reset();
           props.trigger(Math.random());
         })
         .catch((err) => console.log(err));

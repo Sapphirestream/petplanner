@@ -19,7 +19,7 @@ const Register = (props) => {
   //displays error message from axios call
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const authCtx = useContext(AuthContext);
+  const { url, login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   //check if form is valid before allowing submission
@@ -40,7 +40,6 @@ const Register = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const url = "http://localhost:4000";
     const body = {
       username: username.value,
       email: email.value,
@@ -53,7 +52,7 @@ const Register = (props) => {
       .post(`${url}/auth/register`, body)
       .then((res) => {
         const { token, exp, userId } = res.data;
-        authCtx.login(token, exp, userId);
+        login(token, exp, userId);
       })
       .then(() => {
         navigate("/");

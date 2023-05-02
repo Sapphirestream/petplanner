@@ -1,9 +1,15 @@
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import AuthContext from "../store/authContext";
+
 import EventBox from "./EventBox";
+import EventForm from "./EventForm";
 
 import classes from "../css/EventBox.module.css";
 
 const DUMMY_EVENTS = [
   {
+    Id: 1,
     title: "event one",
     time: "8:00 - 10:00 am",
     location: `40 Middle River Rd.
@@ -15,6 +21,7 @@ const DUMMY_EVENTS = [
     notes: "Here are some notes entered by the user",
   },
   {
+    Id: 2,
     title: "event two",
     time: "10:00 - 10:30 am",
     location: `9524 Victoria Dr.
@@ -29,12 +36,40 @@ const DUMMY_EVENTS = [
 
 const DateDisplay = (props) => {
   const currDate = new Date().toDateString();
+  const [events, setEvents] = useState([]);
+  const [eventTrigger, setEventTrigger] = useState("");
+
+  const { token, userId, url } = useContext(AuthContext);
+
+  //Retrieve Events
+  useEffect(() => {
+    if (!userId) {
+      console.log("No User Id");
+      return;
+    }
+    axios
+      .get(`${url}/events/getEvents/${userId}`, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        //sort event by earliest start time
+        res.data.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+
+        setEvents(res.data);
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userId, token, eventTrigger]);
 
   return (
     <div className={classes.dateDisplay}>
       <h4>{currDate}</h4>
-      <EventBox event={DUMMY_EVENTS[0]} />
-      <EventBox event={DUMMY_EVENTS[1]} />
+      {events.map((event) => {
+        return <EventBox event={event} key={event.Id} />;
+      })}
+      <EventForm />
     </div>
   );
 };

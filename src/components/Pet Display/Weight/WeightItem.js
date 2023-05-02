@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 
-import AuthContext from "../../store/authContext";
-import WeightForm from "../Pet Display/WeightForm";
+import AuthContext from "../../../store/authContext";
+import WeightForm from "../Weight/WeightForm";
 
 const WeightItem = (props) => {
-  const url = "http://localhost:4000";
-  const { token } = useContext(AuthContext);
+  const { token, url } = useContext(AuthContext);
 
   const { Id, weight, weightDate } = props.weight;
   const { showEdit, trigger } = props;
@@ -38,7 +37,7 @@ const WeightItem = (props) => {
   return (
     <>
       <tr>
-        <td>{new Date(weightDate).toDateString()}</td>
+        <td>{new Date(weightDate).toLocaleDateString()}</td>
         <td>{weight}</td>
         {showEdit && (
           <td>

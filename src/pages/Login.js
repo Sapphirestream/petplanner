@@ -13,7 +13,7 @@ const Login = () => {
   const password = useInput((pw) => pw.trim() !== "");
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const authCtx = useContext(AuthContext);
+  const { login, url } = useContext(AuthContext);
   const navigate = useNavigate();
 
   let formIsValid = false;
@@ -25,14 +25,13 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const url = "http://localhost:4000";
     const body = { username: username.value, password: password.value };
 
     axios
       .post(`${url}/auth/login`, body)
       .then((res) => {
         const { token, exp, userId } = res.data;
-        authCtx.login(token, exp, userId);
+        login(token, exp, userId);
       })
       .then(() => {
         navigate("/");

@@ -21,15 +21,7 @@ const Medication = sequelize.define("medication", {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  startDate: {
-    type: Sequelize.DATE,
-    allowNull: true,
-  },
-  endDate: {
-    type: Sequelize.DATE,
-    allowNull: true,
-  },
-  frequency: {
+  freq: {
     type: Sequelize.STRING,
     allowNull: true,
   },

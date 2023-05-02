@@ -73,3 +73,18 @@
 .editRow {
   max-width: 100px;
 }
+
+.permBox > div > p,
+.permBox h4 {
+  margin: 5px;
+  padding: 0px;
+}
+
+.permBox button {
+  margin: 0 10px;
+  padding: 0 10px;
+}
+
+.permBox li {
+  height: 22px;
+}

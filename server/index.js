@@ -9,6 +9,7 @@ const app = express();
 
 const authRoutes = require("./routes/auth");
 const petRoutes = require("./routes/pets");
+const eventRoutes = require("./routes/events");
 const seed = require("./controllers/seed");
 
 const sequelize = require("./util/database");
@@ -42,6 +43,7 @@ app.use(cors());
 
 app.use("/auth", authRoutes);
 app.use("/pets", petRoutes);
+app.use("/events", eventRoutes);
 app.get("/seed", seed.seed);
 
 sequelize
@@ -54,3 +56,4 @@ sequelize
   .catch((err) => {
     console.log(err);
   });
+//

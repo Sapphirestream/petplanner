@@ -5,8 +5,19 @@ import { useState } from "react";
 const EventBox = (props) => {
   const [expandPet, setExpandPet] = useState(false);
 
-  const { title, time, location, petID, petName, notes, petPhoto } =
-    props.event;
+  const {
+    Id,
+    completion,
+    location,
+    name,
+    notes,
+    petEdit,
+    petId,
+    petImage,
+    petName,
+    reminders,
+    startTime,
+  } = props.event;
 
   const expandHandler = (event) => {
     event.preventDefault();
@@ -26,23 +37,23 @@ const EventBox = (props) => {
           <p className={classes.routine}>Routine</p>
         </div>
         <div className={classes.textHolder}>
-          <h4>{title}</h4>
-          <p>{time}</p>
+          <h4>{name}</h4>
+          <p>{startTime}</p>
           <p>{location}</p>
-          {expandPet && <p>{notes}</p>}
+          <p>{notes}</p>
         </div>
         <div className={classes.holder}>
           <div>
             <div
               className={classes.petIcon}
-              style={{ backgroundImage: `url(${petPhoto})` }}
+              style={{ backgroundImage: `url(${petImage})` }}
             />
             <p>{petName}</p>
           </div>
           {expandPet ? (
-            <button onClick={collapseHandler}>Show Less...</button>
+            <button onClick={collapseHandler}>Stop Editing...</button>
           ) : (
-            <button onClick={expandHandler}>Show More...</button>
+            <button onClick={expandHandler}>Edit...</button>
           )}
         </div>
       </div>

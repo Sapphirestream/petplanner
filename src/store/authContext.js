@@ -42,6 +42,7 @@ const getLocalData = () => {
 export const AuthContextProvider = (props) => {
   //if stored data, set token and userId
   const localData = getLocalData();
+  const url = "http://localhost:4000";
 
   let initialToken;
   let initialUser;
@@ -87,6 +88,7 @@ export const AuthContextProvider = (props) => {
     login,
     logout,
     userId,
+    url,
   };
 
   return (

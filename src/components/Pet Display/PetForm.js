@@ -9,48 +9,35 @@ import useInput from "../../hook/useInput";
 import FormItem from "../FormItem";
 import AuthContext from "../../store/authContext";
 
+const defaultImage =
+  "https://www.maisonette.gr/wp-content/uploads/2018/01/pet-icon.png";
+
 const PetForm = (props) => {
-  const { token, userId } = useContext(AuthContext);
+  const { token, userId, url } = useContext(AuthContext);
   const { cancel, edit } = props;
   const pet = props.pet;
-  const defaultImage =
-    "https://www.maisonette.gr/wp-content/uploads/2018/01/pet-icon.png";
-
-  //set initial Name so that it will work with the useInput hook
-  let initName;
-  if (edit) {
-    initName = pet.name;
-  } else {
-    initName = "";
-  }
 
   //transform age back into Years from birthyear
-  let initAge;
+  let initAge = "";
   const currYear = new Date().getFullYear();
-  if (edit) {
+  if (pet.age != "") {
     initAge = currYear - pet.age;
   }
 
   //petName is the only form Item that cannot be blank
-  const petName = useInput((name) => name.trim() !== "", initName);
+  const petName = useInput((name) => name.trim() !== "", pet.name);
 
   //set Initial input based on editing or adding a pet
-  const [image, setImage] = useState(edit ? pet.image : "");
-  const [type, setType] = useState(
-    edit ? (pet.type != null ? pet.type : "") : ""
+  const [image, setImage] = useState(pet.image);
+  const [type, setType] = useState(pet.type != null ? pet.type : "");
+  const [breed, setBreed] = useState(pet.breed != null ? pet.breed : "");
+  const [bday, setBday] = useState(
+    pet.bday !== null ? new Date(pet.bday) : null
   );
-  const [breed, setBreed] = useState(
-    edit ? (pet.breed != null ? pet.breed : "") : ""
-  );
-  const [bday, setBday] = useState(edit ? pet.bday : null);
-  const [age, setAge] = useState(edit ? (pet.age != null ? initAge : "") : "");
-  const [vet, setVet] = useState(edit ? (pet.vet != null ? pet.vet : "") : "");
-  const [food, setFood] = useState(
-    edit ? (pet.food != null ? pet.food : "") : ""
-  );
-  const [notes, setNotes] = useState(
-    edit ? (pet.notes != null ? pet.notes : "") : ""
-  );
+  const [age, setAge] = useState(pet.age != null ? initAge : "");
+  const [vet, setVet] = useState(pet.vet != null ? pet.vet : "");
+  const [food, setFood] = useState(pet.food != null ? pet.food : "");
+  const [notes, setNotes] = useState(pet.notes != null ? pet.notes : "");
 
   const [ageDisable, setAgeDisable] = useState(false);
 
@@ -70,7 +57,6 @@ const PetForm = (props) => {
   //SUBMIT FORM
   const submitHandler = (e) => {
     e.preventDefault();
-    const url = "http://localhost:4000";
 
     //create pet object // turn empty strings into nulls
     const pet = {
@@ -90,7 +76,7 @@ const PetForm = (props) => {
       axios
         .put(`${url}/pets/editPet/${props.pet.Id}`, pet)
         .then((res) => {
-          console.log(res);
+          props.trigger(Math.random());
           cancel(false);
         })
         .catch((err) => console.log(err));
@@ -98,10 +84,29 @@ const PetForm = (props) => {
       axios
         .post(`${url}/pets/addPet`, pet, { headers: { authorization: token } })
         .then(() => {
+          props.trigger(Math.random());
           cancel(false);
         })
         .catch((err) => console.log(err));
     }
+  };
+
+  //DELETE PET
+  const deleteHandler = (e) => {
+    e.preventDefault();
+
+    // ADD "ARE YOU SURE" MODAL
+
+    axios
+      .delete(`${url}/pets/deletePet/${props.pet.Id}`)
+      .then(() => {
+        props.trigger(Math.random());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    //console.log(props);
   };
 
   return (
@@ -160,6 +165,9 @@ const PetForm = (props) => {
           onChange={(date) => bdayHandler(date)}
           className={formClasses.calender}
           placeholderText="Enter Birthday OR Age"
+          showYearDropdown
+          yearDropdownItemNumber={20}
+          scrollableYearDropdown
         />
       </div>
 
@@ -218,7 +226,7 @@ const PetForm = (props) => {
         />
       </div>
       <div>
-        {edit && <button>Delete Pet</button>}
+        {edit && <button onClick={deleteHandler}>Delete Pet</button>}
         {!edit && (
           <button
             onClick={(e) => {

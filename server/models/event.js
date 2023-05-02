@@ -9,17 +9,17 @@ const Event = sequelize.define("event", {
     allowNull: false,
     primaryKey: true,
   },
-  date: {
-    type: Sequelize.DATE,
+  name: {
+    type: Sequelize.STRING,
     allowNull: false,
   },
   startTime: {
-    type: Sequelize.TIME,
+    type: Sequelize.DATE,
     allowNull: false,
   },
   endTime: {
-    type: Sequelize.TIME,
-    allowNull: false,
+    type: Sequelize.DATE,
+    allowNull: true,
   },
   completion: {
     type: Sequelize.BOOLEAN,
@@ -29,6 +29,7 @@ const Event = sequelize.define("event", {
     type: Sequelize.BOOLEAN,
     allowNull: false,
   },
+  location: { type: Sequelize.STRING, allowNull: true },
   notes: {
     type: Sequelize.STRING,
     allowNull: true,
