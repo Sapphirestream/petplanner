@@ -1,9 +1,11 @@
 import React from "react";
-import classes from "../css/EventBox.module.css";
 import { useState } from "react";
+import classes from "../css/EventBox.module.css";
+
+import EventForm from "./EventForm";
 
 const EventBox = (props) => {
-  const [expandPet, setExpandPet] = useState(false);
+  const [editPet, setEditPet] = useState(false);
 
   const {
     Id,
@@ -17,28 +19,46 @@ const EventBox = (props) => {
     petName,
     reminders,
     startTime,
+    endTime,
   } = props.event;
+
+  const startTimeFormat = new Date(startTime).toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  let endTimeFormat = null;
+
+  if (endTime != null && endTime != startTime) {
+    endTimeFormat = new Date(endTime).toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+  }
 
   const expandHandler = (event) => {
     event.preventDefault();
-    setExpandPet(true);
+    setEditPet(true);
   };
 
   const collapseHandler = (event) => {
     event.preventDefault();
-    setExpandPet(false);
+    setEditPet(false);
   };
 
   return (
-    <>
-      <div className={classes.eventBox}>
+    <div className={classes.eventBox}>
+      <div className={classes.eventContent}>
         <div className={classes.holder}>
           <div className={classes.checkbox} />
           <p className={classes.routine}>Routine</p>
         </div>
         <div className={classes.textHolder}>
           <h4>{name}</h4>
-          <p>{startTime}</p>
+          <p>
+            {startTimeFormat}
+            {endTimeFormat && ` - ${endTimeFormat}`}
+          </p>
           <p>{location}</p>
           <p>{notes}</p>
         </div>
@@ -50,14 +70,17 @@ const EventBox = (props) => {
             />
             <p>{petName}</p>
           </div>
-          {expandPet ? (
+          {editPet ? (
             <button onClick={collapseHandler}>Stop Editing...</button>
           ) : (
             <button onClick={expandHandler}>Edit...</button>
           )}
         </div>
       </div>
-    </>
+      {editPet && (
+        <EventForm edit={true} event={props.event} pets={props.pets} />
+      )}
+    </div>
   );
 };
 

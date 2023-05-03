@@ -27,7 +27,7 @@
   align-items: center;
   box-sizing: border-box;
   background-color: #f8f8f8;
-  border: solid 2px #636363;
+
   max-width: 900px;
   min-width: 365px;
   width: 70vw;
@@ -110,4 +110,12 @@
 
 .calLabel {
   padding: 10px 0;
+}
+
+.addEvent {
+  border: solid 2px #636363;
+}
+
+.editEvent {
+  width: 97%;
 }

@@ -11,20 +11,38 @@ import "../css/react-datepicker.css";
 import classes from "../css/Form.module.css";
 
 const EventForm = (props) => {
+  let pets = [];
+  const { event, edit } = props;
+  if (props.pets) {
+    pets = props.pets;
+  }
+
   //Input States
-  const name = useInput((name) => name.trim() !== "");
-  const [selectedPet, setSelectedPet] = useState("1");
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
-  const [loc, setLoc] = useState("");
+  const name = useInput((name) => name.trim() !== "", event.name);
+  const [selectedPet, setSelectedPet] = useState();
+  const [startTime, setStartTime] = useState(
+    event.startTime ? new Date(event.startTime) : null
+  );
+  const [endTime, setEndTime] = useState(
+    event.endTime ? new Date(event.endTime) : null
+  );
+  const [loc, setLoc] = useState(event.location ? event.location : "");
   const [notes, setNotes] = useState("");
 
   //creating placeholder for calender input
-  const currTime = new Date().toLocaleTimeString().split(":");
-  const currM = new Date().toLocaleTimeString().split(" ");
-  const currDate = new Date().toDateString().split(" ");
+  const calPH = `${new Date().toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  })} - ${new Date().toLocaleDateString([], {
+    month: "short",
+    day: "numeric",
+  })}`;
 
-  let calPH = `${currTime[0]}:${currTime[1]} ${currM[1]} - ${currDate[1]} ${currDate[2]}`;
+  //Style differences
+  let classVar = "addEvent";
+  if (edit) {
+    classVar = "editEvent";
+  }
 
   const { token, userId, url } = useContext(AuthContext);
 
@@ -43,8 +61,6 @@ const EventForm = (props) => {
       notes: notes != "" ? notes : null,
     };
 
-    console.log(event);
-
     axios
       .post(`${url}/events/addEvent`, event, {
         headers: { authorization: token },
@@ -56,7 +72,9 @@ const EventForm = (props) => {
   };
 
   return (
-    <form className={`${classes.formHolder} ${classes.eventForm}`}>
+    <form
+      className={`${classes.formHolder} ${classes.eventForm} ${classes[classVar]}`}
+    >
       {/* NAME */}
       <FormItem input={name} id="eventName" label="Title" />
 
@@ -69,8 +87,13 @@ const EventForm = (props) => {
           value={selectedPet}
           onChange={(e) => setSelectedPet(e.target.value)}
         >
-          <option value="1">Topaz</option>
-          <option value="2">Lotus</option>
+          {pets.map((pet) => {
+            return (
+              <option value={pet.Id} key={pet.Id}>
+                {pet.name}
+              </option>
+            );
+          })}
         </select>
       </div>
 

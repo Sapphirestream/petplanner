@@ -63,7 +63,7 @@
 
 .expandBox td {
   border: solid grey 1px;
-  justify-content: center;
+  text-align: center;
 }
 
 .expandBox button {

@@ -3,27 +3,29 @@ const User = require("../models/user");
 const Event = require("../models/event");
 const { Op } = require("sequelize");
 
-//get Events (Home Page)
-exports.getEventsOLD = async (req, res) => {
+//get Pet Information
+exports.getPetId = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const events = await User.findOne({
+    //retrieve all petIds of pets the user has access to
+    const pets = await User.findOne({
       attributes: ["Id", "username"],
-      where: { Id: userId || 1 },
+      where: { Id: userId },
       include: {
         model: Pet,
         attributes: ["Id", "name", "image"],
-        include: [Event],
+        through: { attributes: ["edit"] },
       },
     });
-    res.send(events).status(200);
+
+    res.status(200).send(pets.pets);
   } catch (err) {
     console.log(err);
   }
 };
 
-// trying get Events again
+//get Events
 exports.getEvents = async (req, res) => {
   const { userId } = req.params;
 

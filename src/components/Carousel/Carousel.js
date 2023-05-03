@@ -20,8 +20,9 @@ const DUMMY_PETS = [
   },
 ];
 
-const Carousel = () => {
+const Carousel = (props) => {
   const [showCarousel, setShowCarousel] = useState(false);
+  const { pets } = props;
 
   const extendCarouselHandler = (event) => {
     event.preventDefault();
@@ -48,8 +49,10 @@ const Carousel = () => {
             <PetSelect
               image={"https://cdn-icons-png.flaticon.com/512/5110/5110754.png"}
             />
-            {DUMMY_PETS.map((pet) => {
-              return <PetSelect image={pet.image} key={pet.id} />;
+            {pets.map((pet) => {
+              return (
+                <PetSelect image={pet.image} key={pet.Id} petId={pet.Id} />
+              );
             })}
             <PetSelect
               image={"https://cdn-icons-png.flaticon.com/512/992/992651.png"}

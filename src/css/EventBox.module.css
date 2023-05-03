@@ -7,8 +7,6 @@
 }
 
 .eventBox {
-  display: flex;
-  justify-content: space-between;
   background-color: #f8f8f8;
   border: solid 2px #636363;
   max-width: 900px;
@@ -17,6 +15,11 @@
   border-radius: 20px;
   margin: 10px;
   box-sizing: border-box;
+}
+
+.eventContent {
+  display: flex;
+  justify-content: space-between;
 }
 
 .checkbox {
