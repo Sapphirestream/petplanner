@@ -1,7 +1,7 @@
 /* Used by Carousel and PetSelect */
 
 .carousel {
-  background-color: #d9d9d9;
+  background-color: #38a3a5;
   display: flex;
   min-height: 40px;
 }
@@ -19,13 +19,13 @@
 .extendBtn {
   border: none;
   background-color: transparent;
-  color: #636363;
+  color: #081c15;
   font-size: 1rem;
   margin-right: 20px;
 }
 
 .extendBtn:hover {
-  color: white;
+  color: #ccff33;
 }
 
 .petSelectHold {
@@ -36,9 +36,9 @@
 }
 
 .circle {
-  background-color: #ededed;
+  background-color: #c9e4ca;
   border-radius: 100%;
-  border: solid 10px #636363;
+  border: solid 10px #1b4332;
   height: 100px;
   width: 100px;
   margin: 15px 10px;
@@ -51,9 +51,9 @@
 }
 
 .circle:active {
-  border-color: blue;
+  border-color: rgb(93, 240, 93);
 }
 
 .active {
-  border-color: pink;
+  border-color: rgb(93, 240, 93);
 }

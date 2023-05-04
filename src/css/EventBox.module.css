@@ -7,8 +7,8 @@
 }
 
 .eventBox {
-  background-color: #f8f8f8;
-  border: solid 2px #636363;
+  background-color: #dff7fc;
+  border: solid 2px #03045e;
   max-width: 900px;
   min-width: 365px;
   width: 70vw;
@@ -25,14 +25,15 @@
 .checkbox {
   height: 55px;
   width: 55px;
-  border: solid 3px #7c7c7c;
+  border: solid 3px #03045e;
   border-radius: 5px;
+  background-color: white;
 }
 
 .petIcon {
   background-color: #ededed;
   border-radius: 100%;
-  border: solid 5px #636363;
+  border: solid 5px #1b4332;
   height: 50px;
   width: 50px;
   min-width: 50px;
@@ -49,16 +50,17 @@
 }
 
 .holder p {
-  color: grey;
+  color: #03045e;
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-align: center;
+  font-weight: 600;
 }
 
 .holder button {
   width: 90px;
-  border: none;
-  background: transparent;
+  /* border: none; */
+  /* background: transparent; */
 }
 
 .routine {

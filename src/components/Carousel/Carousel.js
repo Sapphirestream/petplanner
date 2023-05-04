@@ -22,7 +22,7 @@ const DUMMY_PETS = [
 
 const Carousel = (props) => {
   const [showCarousel, setShowCarousel] = useState(false);
-  const { pets } = props;
+  const { pets, selectedPet, setSelectedPet } = props;
 
   const extendCarouselHandler = (event) => {
     event.preventDefault();
@@ -38,7 +38,10 @@ const Carousel = (props) => {
       }`}
     >
       {!showCarousel && (
-        <button className={classes.extendBtn} onClick={extendCarouselHandler}>
+        <button
+          className={`${classes.extendBtn} button2`}
+          onClick={extendCarouselHandler}
+        >
           Choose Pet v
         </button>
       )}
@@ -47,11 +50,21 @@ const Carousel = (props) => {
         <>
           <div className={classes.petSelectHold}>
             <PetSelect
+              pet={pets}
+              setSelectedPet={setSelectedPet}
               image={"https://cdn-icons-png.flaticon.com/512/5110/5110754.png"}
+              selectedPet={selectedPet}
             />
             {pets.map((pet) => {
               return (
-                <PetSelect image={pet.image} key={pet.Id} petId={pet.Id} />
+                <PetSelect
+                  pet={[pet]}
+                  image={pet.image}
+                  key={pet.Id}
+                  petId={pet.Id}
+                  selectedPet={selectedPet}
+                  setSelectedPet={setSelectedPet}
+                />
               );
             })}
             <PetSelect

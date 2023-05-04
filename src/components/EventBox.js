@@ -6,6 +6,7 @@ import EventForm from "./EventForm";
 
 const EventBox = (props) => {
   const [editPet, setEditPet] = useState(false);
+  const { trigger } = props;
 
   const {
     Id,
@@ -51,7 +52,7 @@ const EventBox = (props) => {
       <div className={classes.eventContent}>
         <div className={classes.holder}>
           <div className={classes.checkbox} />
-          <p className={classes.routine}>Routine</p>
+          {false && <p className={classes.routine}>Routine</p>}
         </div>
         <div className={classes.textHolder}>
           <h4>{name}</h4>
@@ -71,14 +72,24 @@ const EventBox = (props) => {
             <p>{petName}</p>
           </div>
           {editPet ? (
-            <button onClick={collapseHandler}>Stop Editing...</button>
+            <button onClick={collapseHandler} className="button2">
+              Stop Editing...
+            </button>
           ) : (
-            <button onClick={expandHandler}>Edit...</button>
+            <button onClick={expandHandler} className="button2">
+              Edit...
+            </button>
           )}
         </div>
       </div>
       {editPet && (
-        <EventForm edit={true} event={props.event} pets={props.pets} />
+        <EventForm
+          edit={true}
+          event={props.event}
+          pets={props.pets}
+          trigger={trigger}
+          close={setEditPet}
+        />
       )}
     </div>
   );

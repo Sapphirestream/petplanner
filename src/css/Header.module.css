@@ -1,6 +1,6 @@
 .header {
   color: white;
-  background-color: #9a9a9a;
+  background-color: #023e8a;
   display: flex;
   justify-content: space-between;
   width: 100vw;
@@ -27,7 +27,7 @@
 
 .nav-links a:hover,
 .header button:hover {
-  color: yellow;
+  color: #ccff33;
 }
 
 .header button {
@@ -38,8 +38,8 @@
 }
 
 .search-bar {
-  background-color: #d9d9d9;
-  color: #9a9a9a;
+  background-color: #22577a;
+  color: #c8e8ee;
   width: 250px;
   height: 30px;
   border-radius: 5px;

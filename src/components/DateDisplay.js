@@ -1,6 +1,4 @@
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import AuthContext from "../store/authContext";
+import { useState } from "react";
 
 import EventBox from "./EventBox";
 import EventForm from "./EventForm";
@@ -9,6 +7,7 @@ import classes from "../css/EventBox.module.css";
 
 const emptyEvent = {
   Id: null,
+  petId: null,
   completion: false,
   location: null,
   name: "",
@@ -20,43 +19,44 @@ const emptyEvent = {
 
 const DateDisplay = (props) => {
   const currDate = new Date().toDateString();
-  const [events, setEvents] = useState([]);
-  const [eventTrigger, setEventTrigger] = useState("");
-  const { pets, event } = props;
+  let events = [{ Id: null }];
+  if (props.events) {
+    events = props.events;
+  }
 
-  const { token, userId, url } = useContext(AuthContext);
-
-  //Retrieve Events
-  useEffect(() => {
-    if (!userId) {
-      console.log("No User Id");
-      return;
-    }
-    axios
-      .get(`${url}/events/getEvents/${userId}`, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        //sort event by earliest start time
-        res.data.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
-
-        setEvents(res.data);
-      })
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [userId, token, eventTrigger]);
+  const { pets, date, trigger } = props;
+  const [addEvent, setAddEvent] = useState(false);
 
   return (
     <div className={classes.dateDisplay}>
-      <h4>{currDate}</h4>
+      <h4>{date}</h4>
       {events.map((event) => {
-        return <EventBox event={event} key={event.Id} pets={pets} />;
+        return (
+          <EventBox
+            event={event}
+            key={event.Id}
+            pets={pets}
+            trigger={trigger}
+          />
+        );
       })}
-      <EventForm edit={false} event={emptyEvent} pets={pets} />
+      <button
+        onClick={(e) => {
+          setAddEvent(!addEvent);
+        }}
+      >
+        Add Event
+      </button>
+      {addEvent && (
+        <EventForm
+          edit={false}
+          event={emptyEvent}
+          pets={pets}
+          trigger={trigger}
+          close={setAddEvent}
+        />
+      )}
     </div>
   );
 };
-
 export default DateDisplay;

@@ -12,14 +12,16 @@ import classes from "../css/Form.module.css";
 
 const EventForm = (props) => {
   let pets = [];
-  const { event, edit } = props;
+  const { event, edit, trigger, close } = props;
   if (props.pets) {
     pets = props.pets;
   }
 
   //Input States
   const name = useInput((name) => name.trim() !== "", event.name);
-  const [selectedPet, setSelectedPet] = useState();
+  const [selectedPet, setSelectedPet] = useState(
+    event.petId ? event.petId : pets[0].Id
+  );
   const [startTime, setStartTime] = useState(
     event.startTime ? new Date(event.startTime) : null
   );
@@ -27,7 +29,7 @@ const EventForm = (props) => {
     event.endTime ? new Date(event.endTime) : null
   );
   const [loc, setLoc] = useState(event.location ? event.location : "");
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState(event.notes ? event.notes : "");
 
   //creating placeholder for calender input
   const calPH = `${new Date().toLocaleTimeString([], {
@@ -61,14 +63,35 @@ const EventForm = (props) => {
       notes: notes != "" ? notes : null,
     };
 
-    axios
-      .post(`${url}/events/addEvent`, event, {
-        headers: { authorization: token },
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    console.log("submitting", event);
+
+    if (edit) {
+      axios
+        .put(`${url}/events/editEvent/${props.event.Id}`, event, {
+          headers: { authorization: token },
+        })
+        .then((res) => {
+          console.log(res.data);
+          close(false);
+        })
+        .then(() => {
+          trigger(Math.random());
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .post(`${url}/events/addEvent`, event, {
+          headers: { authorization: token },
+        })
+        .then((res) => {
+          console.log(res.data);
+          close(false);
+        })
+        .then(() => {
+          trigger(Math.random());
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (

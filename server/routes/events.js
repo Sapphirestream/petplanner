@@ -8,6 +8,7 @@ const router = express.Router();
 router.get("/getPetId/:userId", eventController.getPetId);
 router.get("/getEvents/:userId", eventController.getEvents);
 router.post("/addEvent", eventController.addEvent);
+router.put("/editEvent/:Id", eventController.editEvent);
 router.delete("/deleteEvent/:Id", eventController.deleteEvent);
 
 module.exports = router;

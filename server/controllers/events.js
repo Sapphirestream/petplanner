@@ -3,7 +3,7 @@ const User = require("../models/user");
 const Event = require("../models/event");
 const { Op } = require("sequelize");
 
-//get Pet Information
+//get Pet Ids
 exports.getPetId = async (req, res) => {
   const { userId } = req.params;
 
@@ -106,6 +106,43 @@ exports.addEvent = async (req, res) => {
       notes,
       petId,
     });
+
+    res.status(200).send(event);
+  } catch (err) {
+    res.status(400).send(err);
+    console.log(err);
+  }
+};
+
+//edit Event
+exports.editEvent = async (req, res) => {
+  try {
+    const { Id } = req.params;
+
+    const {
+      name,
+      startTime,
+      endTime,
+      completion,
+      reminders,
+      location,
+      notes,
+      petId,
+    } = req.body;
+
+    const event = await Event.update(
+      {
+        name,
+        startTime,
+        endTime,
+        completion,
+        reminders,
+        location,
+        notes,
+        petId,
+      },
+      { where: { Id: Id } }
+    );
 
     res.status(200).send(event);
   } catch (err) {
