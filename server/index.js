@@ -10,7 +10,7 @@ const app = express();
 const authRoutes = require("./routes/auth");
 const petRoutes = require("./routes/pets");
 const eventRoutes = require("./routes/events");
-const seed = require("./controllers/seed");
+// const seed = require("./controllers/seed");
 
 const sequelize = require("./util/database");
 const User = require("./models/user");
@@ -25,9 +25,6 @@ Pet.hasMany(Medication);
 Pet.hasMany(Weight);
 Medication.belongsTo(Pet);
 Weight.belongsTo(Pet);
-
-//User.hasMany(Pet);
-//Pet.belongsTo(User);
 
 User.belongsToMany(Pet, { through: Permission });
 Pet.belongsToMany(User, { through: Permission });
@@ -44,7 +41,7 @@ app.use(cors());
 app.use("/auth", authRoutes);
 app.use("/pets", petRoutes);
 app.use("/events", eventRoutes);
-app.get("/seed", seed.seed);
+// app.get("/seed", seed.seed);
 
 sequelize
   .sync({ force: false })
@@ -57,3 +54,5 @@ sequelize
     console.log(err);
   });
 //
+
+//.seed removed to not share personal data
