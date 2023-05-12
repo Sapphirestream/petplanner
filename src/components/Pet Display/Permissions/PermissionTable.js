@@ -29,38 +29,41 @@ const PermissionTable = (props) => {
 
   return (
     <div className={`${classes.expandBox} ${classes.permBox}`}>
-      <div className="flex">
-        <h4>Owner: </h4>
-        <p>{owner[0].username}</p>
+      <h4>Permission</h4>
+      <div className="right">
+        <div className="flex">
+          <h4>Owner: </h4>
+          <p>{owner[0].username}</p>
+        </div>
+        {/* EDITORS */}
+        {showEditors && <h4>Can Edit: </h4>}
+        {showEditors && (
+          <ul>
+            {editors.map((user) => (
+              <PermissionItem
+                key={`edit${user.Id}`}
+                user={user}
+                permEdit={permEdit}
+                trigger={trigger}
+              />
+            ))}
+          </ul>
+        )}
+        {/* VIEWERS */}
+        {showViewers && <h4>Can View:</h4>}
+        {showViewers && (
+          <ul>
+            {viewers.map((user) => (
+              <PermissionItem
+                key={`view${user.Id}`}
+                user={user}
+                permEdit={permEdit}
+                trigger={trigger}
+              />
+            ))}
+          </ul>
+        )}
       </div>
-      {/* EDITORS */}
-      {showEditors && <h4>Can Edit: </h4>}
-      {showEditors && (
-        <ul>
-          {editors.map((user) => (
-            <PermissionItem
-              key={`edit${user.Id}`}
-              user={user}
-              permEdit={permEdit}
-              trigger={trigger}
-            />
-          ))}
-        </ul>
-      )}
-      {/* VIEWERS */}
-      {showViewers && <h4>Can View:</h4>}
-      {showViewers && (
-        <ul>
-          {viewers.map((user) => (
-            <PermissionItem
-              key={`view${user.Id}`}
-              user={user}
-              permEdit={permEdit}
-              trigger={trigger}
-            />
-          ))}
-        </ul>
-      )}
 
       {permAdd && (
         <PermissionForm petId={petId} trigger={trigger} close={setPermAdd} />

@@ -30,7 +30,6 @@ const MedForm = (props) => {
       notes: notes === "" ? null : notes,
     };
 
-    console.log(url);
     if (meds.Id) {
       //EDIT MEDICATION
       axios
@@ -64,6 +63,7 @@ const MedForm = (props) => {
         className={`${classes.petForm} ${classes.formHolder}`}
         onSubmit={submitHandler}
       >
+        <h2>{!meds.Id ? "Add Medication" : "Edit Medication"}</h2>
         <FormItem
           input={name}
           id="name"

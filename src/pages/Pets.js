@@ -1,10 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import classes from "../css/PetDisplay.module.css";
 import PetDisplay from "../components/Pet Display/PetDisplay";
 import PetForm from "../components/Pet Display/PetForm";
 import AuthContext from "../store/authContext";
+import Modal from "../components/UI/Modal";
 
 // const DUMMY_PETS = [
 //   {
@@ -55,15 +57,13 @@ const Pets = () => {
   const [trigger, setTrigger] = useState("");
   const [ownedPets, setOwnedPets] = useState([]);
   const [viewPets, setViewPets] = useState([]);
-  const { token, userId, url } = useContext(AuthContext);
+  const { token, userId, url, log } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userId) {
-      console.log("No User Id");
-      return;
-    }
     axios
-      .get(`${url}/pets/getPets/${userId}`, {
+      .get(`${url}/pets/getPets`, {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -82,12 +82,14 @@ const Pets = () => {
       })
       .then((res) => {})
       .catch((err) => {
-        console.log(err);
+        console.log("ERROR FROM GET PETS CALL");
+        console.log(err.response);
+        navigate("/login");
       });
   }, [userId, token, trigger]);
 
   return (
-    <div>
+    <>
       {ownedPets.map((pet) => {
         return (
           <PetDisplay pet={pet} key={`pet ${pet.Id}`} trigger={setTrigger} />
@@ -107,15 +109,17 @@ const Pets = () => {
         />
       )}
       {!showAddPet && (
-        <button
-          onClick={(e) => {
-            setShowAddPet(true);
-          }}
-        >
-          Add Pet
-        </button>
+        <div className={classes.addPetBtn}>
+          <button
+            onClick={(e) => {
+              setShowAddPet(true);
+            }}
+          >
+            Add Pet
+          </button>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

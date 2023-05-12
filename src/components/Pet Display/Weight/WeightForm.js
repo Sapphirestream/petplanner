@@ -10,7 +10,7 @@ import AuthContext from "../../../store/authContext";
 
 const WeightForm = (props) => {
   const { token, url } = useContext(AuthContext);
-  const { edit } = props;
+  const { edit, close, trigger } = props;
 
   // set starting Weight Inputs based on Editing or Adding
   const weight = useInput(
@@ -51,7 +51,7 @@ const WeightForm = (props) => {
         })
         .then(() => {
           weight.reset();
-          props.trigger(Math.random());
+          trigger(Math.random());
         })
         .catch((err) => console.log(err));
     } else {
@@ -61,8 +61,8 @@ const WeightForm = (props) => {
           headers: { authorization: token },
         })
         .then((res) => {
-          props.close(false);
-          props.trigger(Math.random());
+          close(false);
+          trigger(Math.random());
         })
         .catch((err) => console.log(err));
     }
@@ -88,19 +88,19 @@ const WeightForm = (props) => {
           className={dateClass}
         />
       </div>
-      <button disabled={!formIsValid} onClick={submitHandler}>
+      <button disabled={!formIsValid} onClick={submitHandler} className="right">
         {edit ? "Edit Record" : "Add Record"}
       </button>
-      {edit && (
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            props.close(false);
-          }}
-        >
-          Cancel
-        </button>
-      )}
+
+      <button
+        className="right"
+        onClick={(e) => {
+          e.preventDefault();
+          close(false);
+        }}
+      >
+        Cancel
+      </button>
     </form>
   );
 };

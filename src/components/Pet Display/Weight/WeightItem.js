@@ -42,8 +42,12 @@ const WeightItem = (props) => {
         {showEdit && (
           <td>
             <p className="flex margin-zero">
-              <button onClick={editHandler}>Edit</button>
-              <button onClick={deleteHandler}>Delete</button>
+              <button onClick={editHandler} className="button2">
+                Edit
+              </button>
+              <button onClick={deleteHandler} className="button2">
+                Delete
+              </button>
             </p>
           </td>
         )}

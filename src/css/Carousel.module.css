@@ -22,6 +22,7 @@
   color: #081c15;
   font-size: 1rem;
   margin-right: 20px;
+  box-shadow: none;
 }
 
 .extendBtn:hover {
@@ -38,7 +39,7 @@
 .circle {
   background-color: #c9e4ca;
   border-radius: 100%;
-  border: solid 10px #1b4332;
+  border: solid 10px #143f2d;
   height: 100px;
   width: 100px;
   margin: 15px 10px;

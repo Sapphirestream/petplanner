@@ -12,7 +12,7 @@ const PermissionItem = (props) => {
     const Id = user.permission.Id;
 
     axios
-      .delete(`${url}/pets/deletePermission/${Id}`, {
+      .delete(`${url}/pets/deletePerm/${Id}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -27,7 +27,12 @@ const PermissionItem = (props) => {
   return (
     <li>
       {user.username}
-      {permEdit && <button onClick={deleteHandler}> X Remove</button>}
+      {permEdit && (
+        <button onClick={deleteHandler} className="right button2">
+          {" "}
+          X Remove
+        </button>
+      )}
     </li>
   );
 };

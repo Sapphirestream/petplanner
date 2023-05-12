@@ -71,7 +71,7 @@ const PetDisplay = (props) => {
   //retrieve Permissions
   useEffect(() => {
     axios
-      .get(`${url}/pets/getPermissions/${Id}`, {
+      .get(`${url}/pets/getPerm/${Id}`, {
         headers: { Authorization: token },
       })
       .then((res) => {

@@ -6,6 +6,7 @@ exports.addWeight = async (req, res) => {
     const { petId, weight, weightDate } = req.body;
 
     await Weight.create({ petId, weight, weightDate });
+
     res.sendStatus(200);
   } catch (err) {
     console.log(err);

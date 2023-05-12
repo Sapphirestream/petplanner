@@ -24,7 +24,7 @@ const PermissionForm = (props) => {
     };
 
     axios
-      .post(`${url}/pets/addPermission`, permission, {
+      .post(`${url}/pets/addPerm`, permission, {
         headers: { authorization: token },
       })
       .then(() => {
@@ -42,7 +42,7 @@ const PermissionForm = (props) => {
   };
   return (
     <>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} className="down">
         <label htmlFor="permUsername">Add User: </label>
         <input
           className={permInput.hasError ? classes.invalid : classes.valid}
@@ -66,7 +66,9 @@ const PermissionForm = (props) => {
         />
         <label htmlFor="permEditCheck">Can Edit?</label>
 
-        <button disabled={!permInput.isValid}>Add</button>
+        <button disabled={!permInput.isValid} className="right">
+          Add
+        </button>
       </form>
       {permInput.hasError && (
         <p className={classes["error-text"]}>Please Enter a Valid Username</p>

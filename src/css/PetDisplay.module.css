@@ -57,6 +57,10 @@
   flex-direction: column;
 }
 
+.expandBox h4 {
+  margin-top: 0px;
+}
+
 .expandHolder {
   display: flex;
   justify-content: center;
@@ -75,25 +79,39 @@
   background-color: white;
 }
 
-.expandBox button {
-  margin: 0px 2px;
+.blank td {
+  height: 21px;
+}
+
+.expandBox > div > button {
+  margin: 15px 15px;
+  margin-bottom: 0px;
 }
 
 .editRow {
   max-width: 100px;
 }
 
-.permBox > div > p,
+.permBox > div > div > p,
 .permBox h4 {
   margin: 5px;
   padding: 0px;
 }
 
-.permBox button {
-  margin: 0 10px;
-  padding: 0 10px;
-}
-
 .permBox li {
   height: 22px;
+}
+
+.permBox ul {
+  margin: 0px;
+}
+
+.addPetBtn {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.addPetBtn button {
+  font-size: 1.5rem;
+  width: 400px;
 }

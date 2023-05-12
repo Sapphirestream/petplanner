@@ -6,12 +6,12 @@ const Medication = require("../models/medication");
 
 //get Pets (Pet Page)
 exports.getPets = async (req, res) => {
-  const { userId } = req.params;
+  const userId = req.tokenId;
 
   try {
     const pets = await User.findOne({
       attributes: ["Id", "username"],
-      where: { Id: userId || 1 },
+      where: { Id: userId },
       order: [
         [Pet, Weight, "weightDate", "ASC"],
         [Pet, Medication, "name", "ASC"],
@@ -20,7 +20,8 @@ exports.getPets = async (req, res) => {
     });
     res.send(pets).status(200);
   } catch (err) {
-    console.log(err);
+    //console.log(err);
+    res.sendStatus(err.statusCode);
   }
 };
 

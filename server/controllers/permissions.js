@@ -4,7 +4,7 @@ const Permission = require("../models/permission");
 //
 
 //Get Permissions
-exports.getPermissions = async (req, res) => {
+exports.getPerm = async (req, res) => {
   const { petId } = req.params;
 
   try {
@@ -30,7 +30,7 @@ exports.getPermissions = async (req, res) => {
 };
 
 //create new Permission
-exports.addPermission = async (req, res) => {
+exports.addPerm = async (req, res) => {
   try {
     const { username, petId, owner, edit } = req.body;
 
@@ -56,7 +56,7 @@ exports.addPermission = async (req, res) => {
 };
 
 //Delete Permission
-exports.deletePermission = async (req, res) => {
+exports.deletePerm = async (req, res) => {
   try {
     const { Id } = req.params;
 

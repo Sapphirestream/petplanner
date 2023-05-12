@@ -127,7 +127,9 @@ const Register = (props) => {
 
         <button disabled={!formIsValid}>Register!</button>
       </form>
-      <Link to="/login">Need to Login?</Link>
+      <Link to="/login" className="down">
+        Need to Login?
+      </Link>
     </main>
   );
 };

@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 
 //get Pet Ids
 exports.getPetId = async (req, res) => {
-  const { userId } = req.params;
+  const userId = req.tokenId;
 
   try {
     //retrieve all petIds of pets the user has access to
@@ -27,7 +27,7 @@ exports.getPetId = async (req, res) => {
 
 //get Events
 exports.getEvents = async (req, res) => {
-  const { userId } = req.params;
+  const userId = req.tokenId;
 
   try {
     //retrieve all petIds of pets the user has access to
@@ -157,6 +157,23 @@ exports.deleteEvent = async (req, res) => {
     const { Id } = req.params;
 
     await Event.destroy({ where: { Id: Id } });
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send(err);
+  }
+};
+
+//mark Complete
+exports.markComplete = async (req, res) => {
+  try {
+    const { completion } = req.body;
+    const { Id } = req.params;
+
+    await Event.update({ completion }, { where: { Id: Id } });
+
+    console.log(completion);
 
     res.sendStatus(200);
   } catch (err) {

@@ -28,6 +28,9 @@ exports.isAuthenticated = (req, res, next) => {
     throw error;
   }
 
+  //pass UserId to next()
+  req.tokenId = token.Id;
+
   //runs next code
   next();
 };

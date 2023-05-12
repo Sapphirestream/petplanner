@@ -3,6 +3,7 @@ import classes from "../../../css/PetDisplay.module.css";
 import MedItem from "./MedItem";
 import MedForm from "./MedForm";
 
+//Add Med prop
 const blankMed = {
   name: "",
   official: "",
@@ -59,6 +60,18 @@ const MedTable = (props) => {
     setMedsForm(false);
   };
 
+  //display if there are no items
+  const blankTable = (
+    <tr className={classes.blank}>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      {medsEdit && <td></td>}
+    </tr>
+  );
+
   return (
     <div className={classes.expandBox}>
       <h4>Medication</h4>
@@ -86,6 +99,7 @@ const MedTable = (props) => {
               />
             );
           })}
+          {props.meds.length === 0 && blankTable}
         </tbody>
       </table>
 

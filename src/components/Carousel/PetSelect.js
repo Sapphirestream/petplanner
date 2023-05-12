@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import classes from "../../css/Carousel.module.css";
 
 const PetSelect = (props) => {
-  const { pet, selectedPet, setSelectedPet } = props;
+  const { pet, selectedPet, setSelectedPet, isPet } = props;
+  const navigate = useNavigate();
 
   let activeSelect = `${classes.circle}`;
 
@@ -23,6 +25,7 @@ const PetSelect = (props) => {
 
     //add pet button
     if (pet == undefined) {
+      navigate("/pets");
       return;
     }
 

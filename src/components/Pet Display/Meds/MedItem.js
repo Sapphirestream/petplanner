@@ -52,8 +52,12 @@ const MedItem = (props) => {
       {showEdit && (
         <td>
           <p className="flex margin-zero">
-            <button onClick={setMedsHandler}>Edit</button>
-            <button onClick={deleteHandler}>Delete</button>
+            <button onClick={setMedsHandler} className="button2">
+              Edit
+            </button>
+            <button onClick={deleteHandler} className="button2">
+              Delete
+            </button>
           </p>
         </td>
       )}

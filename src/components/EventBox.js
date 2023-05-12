@@ -3,6 +3,7 @@ import { useState } from "react";
 import classes from "../css/EventBox.module.css";
 
 import EventForm from "./EventForm";
+import Checkbox from "./UI/Checkbox";
 
 const EventBox = (props) => {
   const [editPet, setEditPet] = useState(false);
@@ -23,36 +24,64 @@ const EventBox = (props) => {
     endTime,
   } = props.event;
 
-  const startTimeFormat = new Date(startTime).toLocaleTimeString([], {
+  const st = new Date(startTime);
+  const et = new Date(endTime);
+
+  const startTimeFormat = st.toLocaleTimeString([], {
     hour: "numeric",
     minute: "2-digit",
   });
 
+  //display End Time if it is different
   let endTimeFormat = null;
 
   if (endTime != null && endTime != startTime) {
-    endTimeFormat = new Date(endTime).toLocaleTimeString([], {
+    endTimeFormat = et.toLocaleTimeString([], {
       hour: "numeric",
       minute: "2-digit",
     });
+
+    // Display Date if end date is different than start date
+    if (st.getDate() != et.getDate() || st.getMonth() != et.getMonth()) {
+      endTimeFormat =
+        endTimeFormat +
+        " (" +
+        et.toLocaleDateString([], {
+          month: "long",
+          day: "numeric",
+        }) +
+        ")";
+    }
   }
-
-  const expandHandler = (event) => {
-    event.preventDefault();
-    setEditPet(true);
-  };
-
-  const collapseHandler = (event) => {
-    event.preventDefault();
-    setEditPet(false);
-  };
 
   return (
     <div className={classes.eventBox}>
       <div className={classes.eventContent}>
         <div className={classes.holder}>
-          <div className={classes.checkbox} />
-          {false && <p className={classes.routine}>Routine</p>}
+          <Checkbox canEdit={petEdit} Id={Id} completion={completion} />
+          {petEdit ? (
+            editPet ? (
+              <button
+                onClick={() => {
+                  setEditPet(!editPet);
+                }}
+                className="button2"
+              >
+                Stop Editing
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setEditPet(!editPet);
+                }}
+                className="button2"
+              >
+                Edit...
+              </button>
+            )
+          ) : (
+            <button className="hidden"></button>
+          )}
         </div>
         <div className={classes.textHolder}>
           <h4>{name}</h4>
@@ -71,15 +100,6 @@ const EventBox = (props) => {
             />
             <p>{petName}</p>
           </div>
-          {editPet ? (
-            <button onClick={collapseHandler} className="button2">
-              Stop Editing...
-            </button>
-          ) : (
-            <button onClick={expandHandler} className="button2">
-              Edit...
-            </button>
-          )}
         </div>
       </div>
       {editPet && (

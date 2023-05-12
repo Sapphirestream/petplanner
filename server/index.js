@@ -32,7 +32,7 @@ Weight.belongsTo(Pet);
 User.belongsToMany(Pet, { through: Permission });
 Pet.belongsToMany(User, { through: Permission });
 
-Pet.hasMany(Event);
+Pet.hasMany(Event, { onDelete: "CASCADE" });
 Event.belongsTo(Pet);
 
 Group.hasMany(Event);

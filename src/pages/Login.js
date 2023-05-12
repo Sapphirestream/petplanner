@@ -70,7 +70,9 @@ const Login = () => {
         />
         <button disabled={!formIsValid}>Log In</button>
       </form>
-      <Link to="/register">Need to Register?</Link>
+      <Link to="/register" className="down">
+        Need to Register?
+      </Link>
     </main>
   );
 };

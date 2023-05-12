@@ -39,7 +39,7 @@ const Carousel = (props) => {
     >
       {!showCarousel && (
         <button
-          className={`${classes.extendBtn} button2`}
+          className={`${classes.extendBtn}`}
           onClick={extendCarouselHandler}
         >
           Choose Pet v
@@ -54,6 +54,7 @@ const Carousel = (props) => {
               setSelectedPet={setSelectedPet}
               image={"https://cdn-icons-png.flaticon.com/512/5110/5110754.png"}
               selectedPet={selectedPet}
+              isPet={false}
             />
             {pets.map((pet) => {
               return (
@@ -64,14 +65,19 @@ const Carousel = (props) => {
                   petId={pet.Id}
                   selectedPet={selectedPet}
                   setSelectedPet={setSelectedPet}
+                  isPet={true}
                 />
               );
             })}
             <PetSelect
               image={"https://cdn-icons-png.flaticon.com/512/992/992651.png"}
+              isPet={false}
             />
           </div>
-          <button className={classes.extendBtn} onClick={extendCarouselHandler}>
+          <button
+            className={`${classes.extendBtn}`}
+            onClick={extendCarouselHandler}
+          >
             Collapse Pets ^
           </button>
         </>

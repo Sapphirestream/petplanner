@@ -23,19 +23,36 @@
 }
 
 .checkbox {
+  display: inline-block;
   height: 55px;
   width: 55px;
   border: solid 3px #03045e;
   border-radius: 5px;
   background-color: white;
+  cursor: pointer;
+}
+
+.checkboxActive {
+  background-color: #03045e;
+}
+
+/* taken from https://css-tricks.com/inclusively-hidden/ */
+.hideDefaultCheck {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 .petIcon {
   background-color: #ededed;
   border-radius: 100%;
-  border: solid 5px #1b4332;
-  height: 50px;
-  width: 50px;
+  border: solid 3px #03045e;
+  height: 80px;
+  width: 80px;
   min-width: 50px;
   background-size: cover;
 }
@@ -44,7 +61,7 @@
   padding: 0 5px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin: 10px 10px;
 }
@@ -55,19 +72,11 @@
   font-size: 1rem;
   text-align: center;
   font-weight: 600;
+  margin-top: 5px;
 }
 
 .holder button {
   width: 90px;
-  /* border: none; */
-  /* background: transparent; */
-}
-
-.routine {
-  color: grey;
-  margin: 0;
-  align-items: end;
-  font-size: 0.7rem;
 }
 
 .textHolder {

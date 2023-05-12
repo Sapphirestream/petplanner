@@ -32,11 +32,6 @@ const Header = () => {
           </NavLink>
         )}
         {isLoggedIn && (
-          <NavLink to="/profile" style={styleActiveLink}>
-            Profile
-          </NavLink>
-        )}
-        {isLoggedIn && (
           <NavLink to="/" onClick={authCtx.logout}>
             Logout
           </NavLink>

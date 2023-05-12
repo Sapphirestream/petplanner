@@ -6,6 +6,7 @@ import axios from "axios";
 import useInput from "../hook/useInput";
 import FormItem from "../components/FormItem";
 import AuthContext from "../store/authContext";
+import Modal from "./UI/Modal";
 
 import "../css/react-datepicker.css";
 import classes from "../css/Form.module.css";
@@ -31,6 +32,13 @@ const EventForm = (props) => {
   const [loc, setLoc] = useState(event.location ? event.location : "");
   const [notes, setNotes] = useState(event.notes ? event.notes : "");
 
+  const [modal, setModal] = useState(false);
+
+  let formIsValid = false;
+  if (name.isValid && startTime != null) {
+    formIsValid = true;
+  }
+
   //creating placeholder for calender input
   const calPH = `${new Date().toLocaleTimeString([], {
     hour: "numeric",
@@ -46,11 +54,15 @@ const EventForm = (props) => {
     classVar = "editEvent";
   }
 
-  const { token, userId, url } = useContext(AuthContext);
+  const { token, url } = useContext(AuthContext);
 
   //Submit form
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if (!formIsValid) {
+      return;
+    }
 
     const event = {
       name: name.value,
@@ -71,7 +83,6 @@ const EventForm = (props) => {
           headers: { authorization: token },
         })
         .then((res) => {
-          console.log(res.data);
           close(false);
         })
         .then(() => {
@@ -79,12 +90,12 @@ const EventForm = (props) => {
         })
         .catch((err) => console.log(err));
     } else {
+      console.log(event);
       axios
         .post(`${url}/events/addEvent`, event, {
           headers: { authorization: token },
         })
         .then((res) => {
-          console.log(res.data);
           close(false);
         })
         .then(() => {
@@ -94,101 +105,154 @@ const EventForm = (props) => {
     }
   };
 
+  //Close && Delete form
+  const exitHandler = () => {
+    if (!edit) {
+      close(false);
+      return;
+    }
+
+    setModal(true);
+  };
+
+  //Confirm Handler
+  const confirmHandler = () => {
+    axios
+      .delete(`${url}/events/deleteEvent/${event.Id}`, {
+        headers: { authorization: token },
+      })
+      .then((res) => {
+        console.log(res.data);
+        close(false);
+      })
+      .then(() => {
+        trigger(Math.random());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <form
-      className={`${classes.formHolder} ${classes.eventForm} ${classes[classVar]}`}
-    >
-      {/* NAME */}
-      <FormItem input={name} id="eventName" label="Title" />
+    <>
+      {modal && (
+        <Modal>
+          <p>Are you sure you want to delete {name.value}?</p>
+          <button
+            onClick={() => {
+              setModal(false);
+            }}
+          >
+            Cancel
+          </button>
+          <button className="right" onClick={confirmHandler}>
+            Delete {name.value}!
+          </button>
+        </Modal>
+      )}
+      <form
+        className={`${classes.formHolder} ${classes.eventForm} ${classes[classVar]}`}
+      >
+        {!edit && <h2>Add Event</h2>}
 
-      {/* PET SELECTION */}
+        {/* NAME */}
+        <FormItem input={name} id="eventName" label="Title" />
 
-      <div>
-        <label>Pet: </label>
-        <select
-          className={classes.valid}
-          value={selectedPet}
-          onChange={(e) => setSelectedPet(e.target.value)}
-        >
-          {pets.map((pet) => {
-            return (
-              <option value={pet.Id} key={pet.Id}>
-                {pet.name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
+        {/* PET SELECTION */}
 
-      {/* START TIME  */}
+        <div>
+          <label>Pet: </label>
+          <select
+            className={classes.valid}
+            value={selectedPet}
+            onChange={(e) => setSelectedPet(e.target.value)}
+          >
+            {pets.map((pet) => {
+              if (pet.permission.edit) {
+                return (
+                  <option value={pet.Id} key={pet.Id}>
+                    {pet.name}
+                  </option>
+                );
+              }
+            })}
+          </select>
+        </div>
 
-      <div className="flex">
-        <label className={classes.calLabel}>Start Time: </label>
-        <DatePicker
-          id="startTime"
-          selected={startTime}
-          onChange={(date) => {
-            setStartTime(date);
-            endTime == startTime && setEndTime(date);
-          }}
-          showTimeSelect
-          dateFormat="h:mm aa - MMM d"
-          placeholderText={`${calPH}`}
-          minDate={subDays(new Date(), 0)}
-          className={classes.calender}
-        />
-      </div>
+        {/* START TIME  */}
 
-      {/* END TIME */}
+        <div className="flex">
+          <label className={classes.calLabel}>Start Time: </label>
+          <DatePicker
+            id="startTime"
+            selected={startTime}
+            onChange={(date) => {
+              setStartTime(date);
+              endTime == startTime && setEndTime(date);
+            }}
+            showTimeSelect
+            dateFormat="h:mm aa - MMM d"
+            placeholderText={`${calPH}`}
+            minDate={subDays(new Date(), 0)}
+            className={classes.calender}
+          />
+        </div>
 
-      <div className="flex">
-        <label className={classes.calLabel}>End Time: </label>
-        <DatePicker
-          id="endTime"
-          selected={endTime}
-          onChange={(date) => setEndTime(date)}
-          showTimeSelect
-          dateFormat="h:mm aa - MMM d"
-          placeholderText={`${calPH}`}
-          minDate={subDays(startTime, 0)}
-          className={classes.calender}
-        />
-      </div>
+        {/* END TIME */}
 
-      {/* LOCATION  */}
+        <div className="flex">
+          <label className={classes.calLabel}>End Time: </label>
+          <DatePicker
+            id="endTime"
+            selected={endTime}
+            onChange={(date) => setEndTime(date)}
+            showTimeSelect
+            dateFormat="h:mm aa - MMM d"
+            placeholderText={`${calPH}`}
+            minDate={subDays(startTime, 0)}
+            className={classes.calender}
+          />
+        </div>
 
-      <div>
-        <label>Location:</label>
-        <input
-          className={classes.valid}
-          placeholder="Address..."
-          value={loc}
-          onChange={(e) => {
-            setLoc(e.target.value);
-          }}
-        />
-      </div>
+        {/* LOCATION  */}
 
-      {/* NOTES  */}
+        <div>
+          <label>Location:</label>
+          <input
+            className={classes.valid}
+            placeholder="Address..."
+            value={loc}
+            onChange={(e) => {
+              setLoc(e.target.value);
+            }}
+          />
+        </div>
 
-      <div>
-        <label>Notes:</label>
-        <textarea
-          placeholder="Notes..."
-          value={notes}
-          onChange={(e) => {
-            setNotes(e.target.value);
-          }}
-        />
-      </div>
+        {/* NOTES  */}
 
-      {/* BUTTONS */}
+        <div>
+          <label>Notes:</label>
+          <textarea
+            placeholder="Notes..."
+            value={notes}
+            onChange={(e) => {
+              setNotes(e.target.value);
+            }}
+          />
+        </div>
 
-      <div>
-        <button type="reset">Cancel</button>
-        <button onClick={submitHandler}>Submit</button>
-      </div>
-    </form>
+        {/* BUTTONS */}
+
+        <div>
+          <button type="button" onClick={exitHandler}>
+            {edit ? "Delete" : "Cancel"}
+          </button>
+          <button onClick={submitHandler} disabled={!formIsValid}>
+            Submit
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

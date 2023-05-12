@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../store/authContext";
 import Carousel from "../components/Carousel/Carousel";
@@ -12,36 +13,29 @@ const Home = () => {
   const [selectedPet, setSelectedPet] = useState([]);
   const [eventTrigger, setEventTrigger] = useState("");
 
+  const navigate = useNavigate();
+
   //Retrieve Pet Ids
   useEffect(() => {
-    if (!userId) {
-      console.log("No User Id");
-      return;
-    } else {
-      axios
-        .get(`${url}/events/getPetId/${userId}`, {
-          headers: { Authorization: token },
-        })
-        .then((res) => {
-          setPets(res.data);
-          //set selected pet to All by default
-          setSelectedPet(res.data);
-        })
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    axios
+      .get(`${url}/events/getPetId`, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        setPets(res.data);
+        //set selected pet to All by default
+        setSelectedPet(res.data);
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   }, [userId, token]);
 
   //Retrieve Events
   useEffect(() => {
-    if (!userId) {
-      console.log("No User Id");
-      return;
-    }
     axios
-      .get(`${url}/events/getEvents/${userId}`, {
+      .get(`${url}/events/getEvents`, {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -49,7 +43,6 @@ const Home = () => {
         res.data.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
         setEvents(res.data);
-        //console.log(new Date(res.data[0].startTime).toDateString());
 
         //always include current day
         let date = [new Date().toDateString()];
@@ -69,10 +62,10 @@ const Home = () => {
         }
 
         setDates(date);
-        console.log("event axios call", eventTrigger);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
+        navigate("/login");
       });
   }, [userId, token, eventTrigger]);
 
@@ -113,6 +106,7 @@ const Home = () => {
           />
         );
       })}
+      <div className="up" />
     </>
   );
 };

@@ -25,8 +25,24 @@ main {
   justify-content: center;
 }
 
-.isActive {
-  color: yellow;
+.right {
+  margin-left: 30px;
+}
+
+.down {
+  margin-top: 20px;
+}
+
+.up {
+  margin-bottom: 20px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.textCenter {
+  text-align: center;
 }
 
 /* BUTTON STYLE FROM https://getcssscan.com/css-buttons-examples */
@@ -60,13 +76,8 @@ button {
   white-space: nowrap;
 }
 
-button:hover,
-button:focus {
+button:hover {
   background-color: #023e8a;
-}
-
-button:focus {
-  box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
 }
 
 button:active {
@@ -74,18 +85,24 @@ button:active {
   box-shadow: none;
 }
 
+button:disabled {
+  background-color: grey;
+}
+
 /* BUTTON OPTION TWO  */
 
 .button2 {
   background-color: transparent;
-  border: 1px solid rgba(0, 2, 99, 0.2);
   border-radius: 3px;
   color: #023e8a;
+  box-shadow: none;
+  box-sizing: border-box;
+  padding: 2px 10px;
 }
 
-.button2:hover,
-.button2:focus {
-  background-color: transparent;
+.button2:hover {
+  border: solid 1px #023e8a;
+  background-color: #80ed99;
 }
 
 .button2:focus {

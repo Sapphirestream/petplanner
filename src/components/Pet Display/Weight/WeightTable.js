@@ -10,6 +10,15 @@ const WeightTable = (props) => {
 
   const { trigger, weight, petId, canEdit } = props;
 
+  //Display if there are no Records
+  const blankTable = (
+    <tr className={classes.blank}>
+      <td></td>
+      <td></td>
+      {weightEdit && <td></td>}
+    </tr>
+  );
+
   return (
     <div className={classes.expandBox}>
       <h4> Weight History </h4>
@@ -32,6 +41,7 @@ const WeightTable = (props) => {
               />
             );
           })}
+          {weight.length === 0 && blankTable}
         </tbody>
       </table>
       {weightAdd && (

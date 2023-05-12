@@ -1,6 +1,7 @@
 /* USED IN 'pages/login' && 'pages/Regiser' && 'NewPetForm'*/
 
 .login {
+  background-color: #dff7fc;
   border: 1px solid #f0f0f0;
   border-radius: 5px;
   display: flex;
@@ -13,6 +14,7 @@
 
 .petForm {
   border: #03045e solid 2px;
+  background-color: white;
   border-radius: 25px;
   width: 90%;
   margin: 20px;
@@ -27,7 +29,6 @@
   align-items: center;
   box-sizing: border-box;
   background-color: #f8f8f8;
-
   max-width: 900px;
   min-width: 365px;
   width: 70vw;
@@ -118,4 +119,10 @@
 
 .editEvent {
   width: 97%;
+  background-color: transparent;
+}
+
+.petForm button,
+.eventForm button {
+  margin: 10px;
 }
